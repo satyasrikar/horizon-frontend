@@ -7,7 +7,7 @@ const HomeCarousel = () => {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="https://picsum.photos/1600/400?random=3"
+          src="https://picsum.photos/1600/200?random=3"
           alt="First slide"
         />
         <Carousel.Caption>
@@ -18,7 +18,7 @@ const HomeCarousel = () => {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="https://picsum.photos/1600/400?random=2"
+          src="https://picsum.photos/1600/200?random=2"
           alt="Second slide"
         />
 
@@ -30,7 +30,7 @@ const HomeCarousel = () => {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="https://picsum.photos/1600/400?random=1"
+          src="https://picsum.photos/1600/200?random=1"
           alt="Third slide"
         />
 
