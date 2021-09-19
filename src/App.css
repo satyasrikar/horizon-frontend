@@ -51,3 +51,13 @@
   color: rgb(172, 172, 172);
   text-decoration: none;
 }
+.navLinkMenu {
+  color: rgb(105, 105, 105);
+  text-decoration: none;
+}
+
+.navLinkActiveMenu {
+  color: rgb(126, 126, 126);
+  text-decoration: none;
+  font-weight: 800;
+}

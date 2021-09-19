@@ -21,13 +21,21 @@ const HomeNavbar = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <NavDropdown title="Insurance" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Motor</NavDropdown.Item>
+              <NavDropdown.Item>
+                <NavLink
+                  className="navLinkMenu"
+                  activeClassName="navLinkActiveMenu"
+                  to="/"
+                >
+                  Motor
+                </NavLink>
+              </NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Travel</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Health</NavDropdown.Item>
             </NavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link>
+            {/* <Nav.Link>
               <NavLink
                 className="navLink"
                 activeClassName="navLinkActive"
@@ -35,7 +43,7 @@ const HomeNavbar = () => {
               >
                 Get Quote
               </NavLink>
-            </Nav.Link>
+            </Nav.Link> */}
             <Nav.Link>
               <NavLink
                 className="navLink"
