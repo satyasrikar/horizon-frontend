@@ -1,0 +1,23 @@
+{
+  "port": 9999,
+  "protocol": "http",
+  "stubs": [
+    {
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "body": "Policy Amount is: 25000"
+          }
+        }
+      ],
+      "predicates": [
+        {
+          "equals": {
+            "path": "/v1/test"
+          }
+        }
+      ]
+    }
+  ]
+}

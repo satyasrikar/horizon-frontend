@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Insurance from "./pages/Insurance";
 import HomeNavbar from "./components/HomeNavbar";
 import AboutUs from "./pages/AboutUs";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route exact path="/" component={Home}></Route>
         <Route exact path="/insurance" component={Insurance}></Route>
         <Route exact path="/about" component={AboutUs}></Route>
+        <Route exact path="/login" component={LoginPage}></Route>
       </Router>
     </div>
   );
