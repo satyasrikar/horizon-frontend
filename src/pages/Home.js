@@ -9,13 +9,11 @@ import {
 } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import GetQuoteForm from "../components/GetQuoteForm";
-import HomeCarousel from "../components/HomeCarousel";
 import HomeNavbar from "../components/HomeNavbar";
 
 const Home = () => {
   return (
     <div>
-      <HomeCarousel />
       <GetQuoteForm />
     </div>
   );

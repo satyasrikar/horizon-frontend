@@ -11,11 +11,13 @@ import {
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ChoosePartner from "./ChoosePartner";
+import HomeCarousel from "../components/HomeCarousel";
 
 const GetQuoteForm = () => {
   const [formSubmit, setFormSubmit] = useState(false);
   return (
     <Container>
+      <HomeCarousel />
       <Row
         className="justify-content-center m-2"
         style={{

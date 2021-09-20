@@ -1,7 +1,11 @@
-import React from "react";
-import { Accordion, Button, Col, Container, Row } from "react-bootstrap";
+import React, { useState } from "react";
+import { Accordion, Alert, Button, Col, Container, Row } from "react-bootstrap";
 
 const ChoosePartner = () => {
+  const [show, setShow] = useState(true);
+  const [partnerName, setPartnerName] = useState("");
+  const [partnerDiscount, setPartnerDiscount] = useState("");
+  const [policyAmount, setPolicyAmount] = useState("");
   const partners = [
     {
       name: "Tata AIG",
@@ -44,6 +48,17 @@ const ChoosePartner = () => {
   ];
   return (
     <>
+      <Alert show={show} variant="light">
+        <Alert.Heading>Partner: {partnerName} </Alert.Heading>
+        <p>Policy Amount: {policyAmount}</p>
+        <p>Partner Discount: {partnerDiscount}%</p>
+        <hr />
+        <div className="d-flex justify-content-end">
+          <Button onClick={() => setShow(false)} variant="outline-success">
+            Confirm
+          </Button>
+        </div>
+      </Alert>
       <Row>
         <Col lg={6}>
           <div style={{ backgroundColor: "whitesmoke" }}>
@@ -60,6 +75,7 @@ const ChoosePartner = () => {
             />
           </div>
         </Col>
+
         <Col lg={6}>
           {partners
             ? partners.map((partner, key) => {
@@ -98,7 +114,17 @@ const ChoosePartner = () => {
                           Description: {partner.description} <br />
                           Discount: {partner.discount}% <br />
                           <b>Policy Amount: ₹{partner.policyAmount}</b> <br />
-                          <Button variant="dark">Select</Button>
+                          <Button
+                            variant="dark"
+                            onClick={() => {
+                              setShow(true);
+                              setPartnerName(partner.name);
+                              setPartnerDiscount(partner.discount);
+                              setPolicyAmount(partner.policyAmount);
+                            }}
+                          >
+                            Select
+                          </Button>
                         </Accordion.Body>
                       </Accordion.Item>
                     </Accordion>
