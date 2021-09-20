@@ -78,6 +78,7 @@ const GetQuoteForm = () => {
                     <option>Toyota</option>
                     <option>Honda</option>
                     <option>Tata</option>
+                    <option>Jeep</option>
                   </Form.Select>
                 </Form.Group>
                 <Form.Group as={Col} controlId="formGridEmail">
@@ -100,6 +101,7 @@ const GetQuoteForm = () => {
                     <option>Bolt (Tata)</option>
                     <option>Sumo (Tata)</option>
                     <option>Nexon (Tata)</option>
+                    <option>Compass (Jeep)</option>
                   </Form.Select>
                 </Form.Group>
               </Row>
