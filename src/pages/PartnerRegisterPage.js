@@ -6,12 +6,13 @@ import {
   Row,
   Col,
   ProgressBar,
+  FloatingLabel,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 
-const UserRegisterPage = () => {
-  const [progress, setProgress] = useState(10);
+const PartnerRegisterPage = () => {
+  const [progress, setProgress] = useState(0);
 
   return (
     <div>
@@ -23,22 +24,19 @@ const UserRegisterPage = () => {
             className="register-form p-5"
           >
             <Row className="mb-4">
-              <h3 className="text-start">Create a free Horizon account</h3>
-              <h6 className="text-start">
-                <Link to="/partners/register">Sign up as a partner</Link>
-              </h6>
+              <h3 className="text-start">Create a Partner account</h3>
             </Row>
-            <Row xs={1} sm={1} md={4}>
+            <Row xs={1} sm={1} md={3}>
               <Col>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Name</Form.Label>
+                  <Form.Label>Partner Name</Form.Label>
                   <Form.Control type="email" placeholder="Enter email" />
                   <Form.Text className="text-muted">Enter full name</Form.Text>
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Email address</Form.Label>
+                  <Form.Label>Agent Name</Form.Label>
                   <Form.Control type="email" placeholder="Enter email" />
                   <Form.Text className="text-muted">
                     We'll never share your email with anyone else.
@@ -46,38 +44,26 @@ const UserRegisterPage = () => {
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" placeholder="Password" />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label htmlFor="inputPassword5">
-                    Re-enter Password
-                  </Form.Label>
-                  <Form.Control
-                    type="password"
-                    id="inputPassword5"
-                    aria-describedby="passwordHelpBlock"
-                  />
-                  <Form.Text id="passwordHelpBlock" muted>
-                    Your password must be 8-20 characters long.
-                  </Form.Text>
+                <Form.Group
+                  className="mb-3"
+                  controlId="formBasicPartnerLicense"
+                >
+                  <Form.Label>Agent Email</Form.Label>
+                  <Form.Control type="email" placeholder="Agent Email" />
                 </Form.Group>
               </Col>
             </Row>
 
-            <Row xs={1} sm={1} md={4}>
+            <Row xs={1} sm={1} md={3}>
               <Col>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Date of Birth</Form.Label>
+                  <Form.Label>Partner Policy Discount</Form.Label>
                   <Form.Control type="date" placeholder="Enter email" />
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>PAN Card Number</Form.Label>
+                  <Form.Label>Partner Policy Premium</Form.Label>
                   <Form.Control type="number" placeholder="Enter PAN" />
                   <Form.Text className="text-muted">
                     We'll never share your PAN with anyone else.
@@ -86,12 +72,72 @@ const UserRegisterPage = () => {
               </Col>
 
               <Col>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Profession</Form.Label>
-                  <Form.Control type="text" placeholder="Profession" />
+                <Form.Group
+                  className="mb-3"
+                  controlId="formBasicPartnerLicense"
+                >
+                  <Form.Label>IRDA License</Form.Label>
+                  <Form.Control type="number" placeholder="IRDAIXXXXXX" />
                 </Form.Group>
               </Col>
             </Row>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <div
+                className="text-start"
+                style={{
+                  display: "flex",
+                }}
+              >
+                <div className="px-4">
+                  <b>Insurance Offered:</b>
+                </div>
+
+                <Form.Group className="" controlId="formBasicCheckbox">
+                  <div key={`inline-checkbox`}>
+                    <Form.Check
+                      type="checkbox"
+                      id={`inline-checkbox`}
+                      inline
+                      label="Motor"
+                    />
+                  </div>
+                </Form.Group>
+
+                <Form.Group className="" controlId="formBasicCheckbox">
+                  <div key={`inline-checkbox`}>
+                    <Form.Check
+                      type="checkbox"
+                      id={`inline-checkbox`}
+                      inline
+                      label="Life"
+                    />
+                  </div>
+                </Form.Group>
+                <Form.Group className="" controlId="formBasicCheckbox">
+                  <div key={`inline-checkbox`}>
+                    <Form.Check
+                      type="checkbox"
+                      id={`inline-checkbox`}
+                      inline
+                      label="Health"
+                      name="type"
+                    />
+                  </div>
+                </Form.Group>
+                <Form.Group className="" controlId="formBasicCheckbox">
+                  <div key={`inline-checkbox`}>
+                    <Form.Check
+                      type="checkbox"
+                      id={`inline-checkbox`}
+                      inline
+                      label="Travel"
+                      name="type"
+                    />
+                  </div>
+                </Form.Group>
+              </div>
+            </Form.Group>
 
             <div
               style={{
@@ -112,20 +158,6 @@ const UserRegisterPage = () => {
                     />
                   </div>
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                  <div key={`inline-checkbox`}>
-                    <Form.Check
-                      type="checkbox"
-                      id={`inline-checkbox`}
-                      inline
-                      label="Send me updates on new policies, and offers at Horion India"
-                      name="type"
-                    />
-                  </div>
-                </Form.Group>
-              </div>
-              <div>
-                <p>Forgot password?</p>
               </div>
             </div>
             <div
@@ -143,7 +175,7 @@ const UserRegisterPage = () => {
                   e.preventDefault();
                 }}
               >
-                Create account
+                Create partner account
               </Button>
             </div>
           </Form>
@@ -153,4 +185,4 @@ const UserRegisterPage = () => {
   );
 };
 
-export default UserRegisterPage;
+export default PartnerRegisterPage;

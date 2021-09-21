@@ -10,8 +10,8 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 
-const UserRegisterPage = () => {
-  const [progress, setProgress] = useState(10);
+const PartnerPortal = () => {
+  const [progress, setProgress] = useState(0);
 
   return (
     <div>
@@ -23,9 +23,9 @@ const UserRegisterPage = () => {
             className="register-form p-5"
           >
             <Row className="mb-4">
-              <h3 className="text-start">Create a free Horizon account</h3>
+              <h3 className="text-start">Horizon Partner Portal</h3>
               <h6 className="text-start">
-                <Link to="/partners/register">Sign up as a partner</Link>
+                <Link to="/">Read the FAQ</Link>
               </h6>
             </Row>
             <Row xs={1} sm={1} md={4}>
@@ -153,4 +153,4 @@ const UserRegisterPage = () => {
   );
 };
 
-export default UserRegisterPage;
+export default PartnerPortal;

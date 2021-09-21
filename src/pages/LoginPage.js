@@ -1,5 +1,5 @@
-import React from "react";
-import { Form, Button, Container, Row } from "react-bootstrap";
+import React, { useState } from "react";
+import { Form, Button, Container, Row, ProgressBar } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const LoginPage = () => {
@@ -8,8 +8,8 @@ const LoginPage = () => {
       <Container className="mt-4">
         <Row className="justify-content-center" md={2}>
           <Form
-            style={{ border: "3px solid black", borderRadius: "15px" }}
-            className="p-5"
+            style={{ border: "3px solid black", borderRadius: "20px" }}
+            className="login-form p-5"
           >
             <Row>
               <h3 className="text-start">Login to Horizon</h3>

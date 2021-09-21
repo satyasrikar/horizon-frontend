@@ -19,7 +19,6 @@ const GetQuoteForm = () => {
     <Container>
       <Row className="justify-content-center">
         <HomeCarousel />
-        <h4>Horizon Motor Insurance</h4>
       </Row>
       <Row
         style={{ backgroundColor: "lightgoldenrodyellow" }}
@@ -35,6 +34,8 @@ const GetQuoteForm = () => {
                 paddingBlock: "2rem",
               }}
             >
+              <h4>Horizon Motor Insurance</h4>
+
               <hr />
               <Row className="mb-3" xs={1} md={2}>
                 <Col>

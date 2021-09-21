@@ -8,6 +8,8 @@ import HomeNavbar from "./components/HomeNavbar";
 import AboutUs from "./pages/AboutUs";
 import LoginPage from "./pages/LoginPage";
 import UserRegisterPage from "./pages/UserRegisterPage";
+import PartnerPortal from "./pages/PartnerPortal";
+import PartnerRegisterPage from "./pages/PartnerRegisterPage";
 
 function App() {
   return (
@@ -19,6 +21,12 @@ function App() {
         <Route exact path="/about" component={AboutUs}></Route>
         <Route exact path="/login" component={LoginPage}></Route>
         <Route exact path="/register" component={UserRegisterPage}></Route>
+        <Route
+          exact
+          path="/partners/register"
+          component={PartnerRegisterPage}
+        ></Route>
+        <Route exact path="/partners/portal" component={PartnerPortal}></Route>
       </Router>
     </div>
   );
