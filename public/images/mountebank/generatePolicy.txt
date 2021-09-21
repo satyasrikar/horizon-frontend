@@ -1,0 +1,91 @@
+
+// NEW UPDATED
+
+function (request, response) {
+	var age = 2; // user
+	var enginePower = 2800; //user
+	var partnerDiscount = 53; //partner store
+	var currentPrice = 1000000; // motor store
+	var depreciatedValue; //autogen 
+	var damagePremium; // autogen
+	var gstRate = 18; 
+
+
+	if (age < 1) {
+		var depreciation = 15;
+	} else if (age > 1 && age < 2) {
+		var depreciation = 20;
+	} else if (age > 2 && age < 3) {
+		var depreciation = 30;
+	} else if (age > 3 && age < 4) {
+		var depreciation = 40;
+	} else if (age > 4 && age < 5) {
+		var depreciation = 50;
+	} else {
+		var depreciation = 55;
+	}
+
+	depreciatedValue = currentPrice - ((depreciation / 100) * currentPrice)
+
+
+	if (age <= 5) {
+		if (enginePower >= 1000 && enginePower < 2500) {
+			damagePremium = 3.283;
+		} else if (enginePower >= 2500 && enginePower < 10000) {
+			damagePremium = 3.440;
+		} else if (enginePower >= 10000) {
+			damagePremium = 3.127;
+		}
+	} else if (age > 5) {
+		if (enginePower >= 1000 && enginePower < 2500) {
+			damagePremium = 3.283;
+		} else if (enginePower >= 2500 && enginePower < 10000) {
+			damagePremium = 3.440;
+		} else if (enginePower >= 10000) {
+			damagePremium = 3.127;
+		}
+	}
+
+	currentPrice = (damagePremium / 100) * depreciatedValue;
+
+
+	currentPrice = currentPrice - ((partnerDiscount / 100) * currentPrice);
+
+
+	if (age < 1) {
+		var ncbDiscount = 20;
+	} else if (age < 2) {
+		var ncbDiscount = 25;
+	} else if (age < 3) {
+		var ncbDiscount = 30;
+	} else if (age < 4) {
+		var ncbDiscount = 40;
+	} else if (age < 5) {
+		var ncbDiscount = 50;
+	} else if (age > 5) {
+		var ncbDiscount = 55;
+	}
+
+	currentPrice = currentPrice - (currentPrice * (ncbDiscount / 100))
+
+
+	if (enginePower > 1000 && enginePower < 2500) {
+		var thirdPartyPremium = 2072;
+
+	} else if (enginePower > 2500 && enginePower < 10000) {
+		var thirdPartyPremium = 3221;
+
+	} else if (enginePower > 10000) {
+		var thirdPartyPremium = 7890;
+	}
+
+	currentPrice = currentPrice + thirdPartyPremium;
+
+
+	currentPrice = currentPrice + 400;
+
+	currentPrice = currentPrice + currentPrice * (gstRate / 100)
+	response.body = response.body.replace('${DATA}', currentPrice);
+
+    
+}

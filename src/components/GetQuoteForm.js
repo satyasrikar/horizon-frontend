@@ -17,23 +17,26 @@ const GetQuoteForm = () => {
   const [formSubmit, setFormSubmit] = useState(false);
   return (
     <Container>
-      <HomeCarousel />
+      <Row className="justify-content-center">
+        <HomeCarousel />
+        <h4>Horizon Motor Insurance</h4>
+      </Row>
       <Row
-        className="justify-content-center m-2"
-        style={{
-          backgroundColor: "wheat",
-          paddingInline: "12rem",
-          paddingBlock: "2rem",
-        }}
+        style={{ backgroundColor: "lightgoldenrodyellow" }}
+        className="justify-content-md-center"
       >
-        <Col>
-          <Row>
-            <h4>Horizon Motor Insurance</h4>
-          </Row>
+        <Col className="col-md-8">
           {!formSubmit ? (
-            <Form>
+            <Form
+              className="px-md-5"
+              style={{
+                backgroundColor: "wheat",
+                // paddingInline: "12rem",
+                paddingBlock: "2rem",
+              }}
+            >
               <hr />
-              <Row className="mb-3">
+              <Row className="mb-3" xs={1} md={2}>
                 <Col>
                   <h6>Choose insurance type</h6>
                 </Col>
@@ -56,7 +59,7 @@ const GetQuoteForm = () => {
                   </div>
                 </Col>
               </Row>
-              <Row className="mb-3">
+              <Row className="mb-3" xs={1} md={2}>
                 <Form.Group as={Col} controlId="formGridEmail">
                   <Form.Label>Registration Number</Form.Label>
                   <Form.Control type="email" placeholder="MH0500900C42" />
@@ -68,7 +71,7 @@ const GetQuoteForm = () => {
                 </Form.Group>
               </Row>
 
-              <Row className="mb-3">
+              <Row className="mb-3" xs={1} md={2}>
                 <Form.Group as={Col} controlId="formGridEmail">
                   <Form.Label>Vehicle Make</Form.Label>
                   <Form.Select defaultValue="Choose a vehicle make">
@@ -127,9 +130,9 @@ const GetQuoteForm = () => {
             </Row> */}
 
               <Row>
-                <Col>
+                {/* <Col>
                   <Button variant="dark">Submit Details</Button>
-                </Col>
+                </Col> */}
                 <Col>
                   <Button
                     variant="dark"
@@ -140,7 +143,7 @@ const GetQuoteForm = () => {
                       console.log(formSubmit);
                     }}
                   >
-                    Submit Details (DEMO)
+                    Submit Details
                   </Button>
                 </Col>
               </Row>
