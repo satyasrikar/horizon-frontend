@@ -57,6 +57,15 @@ const HomeNavbar = () => {
               <NavLink
                 className="navLink"
                 activeClassName="navLinkActive"
+                to="/register"
+              >
+                Register
+              </NavLink>
+            </Nav.Link>
+            <Nav.Link>
+              <NavLink
+                className="navLink"
+                activeClassName="navLinkActive"
                 to="/login"
               >
                 Login

@@ -5,9 +5,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const LoginPage = () => {
   return (
     <div>
-      <Container>
-        <Row className="justify-content-center mt-4" md={2}>
-          <Form>
+      <Container className="mt-4">
+        <Row className="justify-content-center" md={2}>
+          <Form
+            style={{ border: "3px solid black", borderRadius: "15px" }}
+            className="p-5"
+          >
+            <Row>
+              <h3 className="text-start">Login to Horizon</h3>
+            </Row>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control type="email" placeholder="Enter email" />
@@ -54,7 +60,8 @@ const LoginPage = () => {
               <Button
                 variant="dark"
                 type="submit"
-                style={{ paddingInline: "1rem" }}
+                // style={{ paddingInline: "1rem" }}
+                className="px-3"
               >
                 <img
                   src="images/enter-invert.png"

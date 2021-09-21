@@ -7,6 +7,7 @@ import Insurance from "./pages/Insurance";
 import HomeNavbar from "./components/HomeNavbar";
 import AboutUs from "./pages/AboutUs";
 import LoginPage from "./pages/LoginPage";
+import UserRegisterPage from "./pages/UserRegisterPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route exact path="/insurance" component={Insurance}></Route>
         <Route exact path="/about" component={AboutUs}></Route>
         <Route exact path="/login" component={LoginPage}></Route>
+        <Route exact path="/register" component={UserRegisterPage}></Route>
       </Router>
     </div>
   );

@@ -149,7 +149,9 @@ const GetQuoteForm = () => {
               </Row>
             </Form>
           ) : (
-            <ChoosePartner />
+            <div className="mt-4 mb-4">
+              <ChoosePartner />
+            </div>
           )}
         </Col>
       </Row>

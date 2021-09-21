@@ -91,15 +91,22 @@ const ChoosePartner = () => {
                               width: "16rem",
                             }}
                           >
-                            <Col>
+                            <Col className="col-12 col-md-6">
                               <span> {partner.name}</span>
                             </Col>
-                            <Col>
+                            <Col className="col-12 col-md-4">
                               <span>
                                 <h6>
                                   <b> ₹{partner.policyAmount}</b>
                                 </h6>
                               </span>
+                            </Col>
+                            <Col className="col-12 col-md-2">
+                              <img
+                                src={partner.imageUrl}
+                                alt=""
+                                style={{ width: "3rem" }}
+                              />
                             </Col>
                           </Row>
                         </Accordion.Header>
@@ -111,9 +118,13 @@ const ChoosePartner = () => {
                               style={{ width: "5rem" }}
                             />
                           </Col>
-                          Description: {partner.description} <br />
-                          Discount: {partner.discount}% <br />
-                          <b>Policy Amount: ₹{partner.policyAmount}</b> <br />
+
+                          <Row>
+                            Description: {partner.description}
+                            <br />
+                            Discount: {partner.discount}% <br />
+                            <b>Policy Amount: ₹{partner.policyAmount}</b> <br />
+                          </Row>
                           <Button
                             variant="dark"
                             onClick={() => {
