@@ -35,15 +35,15 @@ const HomeNavbar = () => {
             </NavDropdown>
           </Nav>
           <Nav>
-            {/* <Nav.Link>
+            <Nav.Link>
               <NavLink
                 className="navLink"
                 activeClassName="navLinkActive"
-                to="/insurance"
+                to="/partners/portal"
               >
-                Get Quote
+                Partner Portal
               </NavLink>
-            </Nav.Link> */}
+            </Nav.Link>
             <Nav.Link>
               <NavLink
                 className="navLink"
