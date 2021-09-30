@@ -63,7 +63,7 @@ const ChoosePartner = () => {
         <Col lg={6}>
           <div style={{ backgroundColor: "whitesmoke" }}>
             <h5>Jeep Compass</h5>
-            <p>Satyasri Kar</p>
+            <p>HorizonCustomer</p>
             <h6>MH050700C009F</h6>
             <p>2018</p>
           </div>

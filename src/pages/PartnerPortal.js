@@ -15,7 +15,59 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 
 const PartnerPortal = () => {
+  const [selectedFile, setSelectedFile] = useState();
+  const [renderedFile, setRenderedFile] = useState({});
+  const [isFilePicked, setIsFilePicked] = useState(false);
+
   const sampleCustomerData = ["Name", "Phone", "Address", "PAN"];
+  const samplePartnerData = [
+    "FullName",
+    "Telephone",
+    "Home Address",
+    "PAN",
+    "Aadhar",
+  ];
+
+  // const changeHandler = (event) => {
+  //   setSelectedFile(event.target.files[0]);
+  //   console.log(event.target.files[0]);
+  // };
+
+  const changeHandler = (e) => {
+    const fileReader = new FileReader();
+    fileReader.readAsText(e.target.files[0], "UTF-8");
+    fileReader.onload = (e) => {
+      setRenderedFile(JSON.parse(e.target.result));
+      setSelectedFile(e.target.result);
+    };
+  };
+
+  const renderedKeys = new Array();
+  renderedKeys.push({
+    keyName: "XYZ",
+  });
+
+  const handleSubmission = () => {};
+  const printKeys = () => {
+    console.log(renderedKeys);
+  };
+  const printValue = () => {
+    const keys = Object.keys(renderedFile);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      console.log(key);
+      const keyData = {
+        keyName: key,
+      };
+      renderedKeys.push(keyData);
+    }
+  };
+
+  var keyArray = renderedKeys;
+  var keyList = [];
+  keyArray.forEach(function (element) {
+    keyList.push({ label: element, value: element });
+  });
 
   const vehicleList = [
     {
@@ -119,6 +171,33 @@ const PartnerPortal = () => {
 
   return (
     <div>
+      <div>
+        <select type="text" options={renderedKeys}></select>
+      </div>
+      {/* <select type="text">
+        {renderedKeys === undefined
+          ? "LOADING..."
+          : renderedKeys.map((key, idx) => {
+              console.log(key);
+              return <option value={key.keyName}>{key.keyName}</option>;
+            })}
+      </select> */}
+
+      <Button
+        onClick={() => {
+          printValue();
+        }}
+      >
+        SHOW VALUE
+      </Button>
+      <Button
+        onClick={() => {
+          printKeys();
+        }}
+      >
+        SHOW Keys
+      </Button>
+
       <Container className="mt-4 mb-4">
         <Row
           style={{ border: "3px solid black", borderRadius: "20px" }}
@@ -146,13 +225,11 @@ const PartnerPortal = () => {
                       }}
                     >
                       <span>Name</span>
-                      <Form.Check
-                        type="checkbox"
-                        id={`inline-checkbox`}
-                        inline
-                        name="type"
-                      />
+                      <Form.Select style={{ width: "50%" }}>
+                        <option>OK</option>
+                      </Form.Select>
                     </ListGroup.Item>
+
                     <ListGroup.Item
                       style={{
                         display: "flex",
@@ -415,17 +492,16 @@ const PartnerPortal = () => {
               </Row>
               <Row>
                 <InputGroup className="mb-3">
+                  <input type="file" name="file" onChange={changeHandler} />
                   <FormControl
                     placeholder="Paste JSON Test Contract or upload WSDL"
                     aria-label="TestDataInput"
                     aria-describedby="basic-addon2"
                   />
-                  <Button variant="outline-secondary" id="button-addon2">
+
+                  {/* <Button variant="outline-secondary" id="button-addon2">
                     Upload
-                  </Button>
-                  <Button variant="outline-secondary" id="button-addon2">
-                    Submit
-                  </Button>
+                  </Button> */}
                 </InputGroup>
               </Row>
               <Row xs={1} sm={1} md={2}>
