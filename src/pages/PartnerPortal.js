@@ -15,53 +15,40 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 
 const PartnerPortal = () => {
-  const [selectedFile, setSelectedFile] = useState();
-  const [renderedFile, setRenderedFile] = useState({});
-  const [isFilePicked, setIsFilePicked] = useState(false);
+  const [localMapping, setLocalMapping] = useState();
+  const [finalKeys, setFinalKeys] = useState();
+  const [renderedFile, setRenderedFile] = useState();
 
-  const sampleCustomerData = ["Name", "Phone", "Address", "PAN"];
-  const samplePartnerData = [
-    "FullName",
-    "Telephone",
-    "Home Address",
+  const sampleCustomerData = [
+    "Name",
+    "Phone",
+    "Address",
     "PAN",
     "Aadhar",
+    "Reg Number",
+    "Age",
   ];
 
-  // const changeHandler = (event) => {
-  //   setSelectedFile(event.target.files[0]);
-  //   console.log(event.target.files[0]);
-  // };
-
-  const changeHandler = (e) => {
-    const fileReader = new FileReader();
-    fileReader.readAsText(e.target.files[0], "UTF-8");
-    fileReader.onload = (e) => {
-      setRenderedFile(JSON.parse(e.target.result));
-      setSelectedFile(e.target.result);
-    };
+  const extractKeys = (jsonObject) => {
+    const keys = Object.keys(jsonObject);
+    keys.forEach((key, idx) => {
+      const keyObject = {
+        keyName: key,
+        keyIdx: idx,
+      };
+      renderedKeys.push(keyObject);
+    });
+    console.log(renderedKeys);
+    setFinalKeys(renderedKeys);
   };
+
+  useEffect(() => {
+    setLocalMapping(localStorage.getItem("mapping"));
+    console.log(JSON.parse(localStorage.getItem("mapping")));
+    extractKeys(JSON.parse(localStorage.getItem("mapping")));
+  }, []);
 
   const renderedKeys = new Array();
-  renderedKeys.push({
-    keyName: "XYZ",
-  });
-
-  const handleSubmission = () => {};
-  const printKeys = () => {
-    console.log(renderedKeys);
-  };
-  const printValue = () => {
-    const keys = Object.keys(renderedFile);
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
-      console.log(key);
-      const keyData = {
-        keyName: key,
-      };
-      renderedKeys.push(keyData);
-    }
-  };
 
   var keyArray = renderedKeys;
   var keyList = [];
@@ -171,9 +158,13 @@ const PartnerPortal = () => {
 
   return (
     <div>
-      <div>
+      {renderedKeys.map((key, idx) => {
+        console.log("*****" + idx);
+        return "*%%%%";
+      })}
+      {/* <div>
         <select type="text" options={renderedKeys}></select>
-      </div>
+      </div> */}
       {/* <select type="text">
         {renderedKeys === undefined
           ? "LOADING..."
@@ -183,7 +174,7 @@ const PartnerPortal = () => {
             })}
       </select> */}
 
-      <Button
+      {/* <Button
         onClick={() => {
           printValue();
         }}
@@ -196,7 +187,7 @@ const PartnerPortal = () => {
         }}
       >
         SHOW Keys
-      </Button>
+      </Button> */}
 
       <Container className="mt-4 mb-4">
         <Row
@@ -218,64 +209,30 @@ const PartnerPortal = () => {
                     <b>Customer</b>
                   </Card.Header>
                   <ListGroup variant="flush">
-                    <ListGroup.Item
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <span>Name</span>
-                      <Form.Select style={{ width: "50%" }}>
-                        <option>OK</option>
-                      </Form.Select>
-                    </ListGroup.Item>
-
-                    <ListGroup.Item
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <span>Phone</span>
-                      <Form.Check
-                        type="checkbox"
-                        id={`inline-checkbox`}
-                        inline
-                        name="type"
-                      />
-                    </ListGroup.Item>
-                    <ListGroup.Item
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <span>Email</span>
-                      <Form.Check
-                        type="checkbox"
-                        id={`inline-checkbox`}
-                        inline
-                        name="type"
-                      />
-                    </ListGroup.Item>
-                    <ListGroup.Item
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <span>PAN</span>
-                      <Form.Check
-                        type="checkbox"
-                        id={`inline-checkbox`}
-                        inline
-                        name="type"
-                      />
-                    </ListGroup.Item>
+                    {sampleCustomerData.map((mappingField, idx) => {
+                      return (
+                        <ListGroup.Item
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <span>{mappingField}</span>
+                          <select style={{ width: "50%" }}>
+                            <option>Choose</option>
+                            {finalKeys === undefined
+                              ? "Loading"
+                              : finalKeys.map((finalKey, idx) => {
+                                  return <option>{finalKey.keyName}</option>;
+                                })}
+                          </select>
+                        </ListGroup.Item>
+                      );
+                    })}
                   </ListGroup>
                 </Card>
               </Col>
-              <Col>
+              {/* <Col>
                 <Card className="text-start">
                   <Card.Header>
                     <b>Partner</b>
@@ -339,9 +296,9 @@ const PartnerPortal = () => {
                     </ListGroup.Item>
                   </ListGroup>
                 </Card>
-              </Col>
+              </Col> */}
             </Row>
-            <Row className="mt-4">
+            {/* <Row className="mt-4">
               <Col>
                 <Accordion>
                   <Accordion.Item eventKey="0">
@@ -439,8 +396,8 @@ const PartnerPortal = () => {
                   </Accordion.Item>
                 </Accordion>
               </Col>
-            </Row>
-            <Row className="mt-4">
+            </Row> */}
+            {/* <Row className="mt-4">
               <Col>
                 <Card className="text-start">
                   <Card.Header>
@@ -479,7 +436,7 @@ const PartnerPortal = () => {
                   </ListGroup>
                 </Card>
               </Col>
-            </Row>
+            </Row> */}
           </Col>
 
           <Col>
@@ -492,7 +449,7 @@ const PartnerPortal = () => {
               </Row>
               <Row>
                 <InputGroup className="mb-3">
-                  <input type="file" name="file" onChange={changeHandler} />
+                  {/* <input type="file" name="file" onChange={changeHandler} /> */}
                   <FormControl
                     placeholder="Paste JSON Test Contract or upload WSDL"
                     aria-label="TestDataInput"

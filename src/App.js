@@ -10,6 +10,7 @@ import LoginPage from "./pages/LoginPage";
 import UserRegisterPage from "./pages/UserRegisterPage";
 import PartnerPortal from "./pages/PartnerPortal";
 import PartnerRegisterPage from "./pages/PartnerRegisterPage";
+import PortalEntry from "./pages/PortalEntry";
 
 function App() {
   return (
@@ -26,7 +27,12 @@ function App() {
           path="/partners/register"
           component={PartnerRegisterPage}
         ></Route>
-        <Route exact path="/partners/portal" component={PartnerPortal}></Route>
+        <Route
+          exact
+          path="/partners/portal/2"
+          component={PartnerPortal}
+        ></Route>
+        <Route exact path="/partners/portal/1" component={PortalEntry}></Route>
       </Router>
     </div>
   );
