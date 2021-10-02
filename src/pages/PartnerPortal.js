@@ -13,12 +13,39 @@ import {
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const PartnerPortal = () => {
   const [localMapping, setLocalMapping] = useState();
+  const [policyName, setPolicyName] = useState();
+  const [policyDescription, setPolicyDescription] = useState();
   const [finalKeys, setFinalKeys] = useState();
   const [renderedFile, setRenderedFile] = useState();
   const [matchedData, setMatchedData] = useState();
+  const [partnerPremium, setPartnerPremium] = useState();
+  const [partnerDiscount, setPartnerDiscount] = useState();
+  const [finalMapping, setFinalMapping] = useState({
+    Name: "",
+    Phone: "",
+    Address: "",
+    PAN: "",
+    Aadhar: "",
+    RegNumber: "",
+    Age: "",
+  });
+
+  const postPolicyData = () => {
+    const postData = {
+      ...finalMapping,
+      ...policyDetails,
+    };
+    axios
+      .post("http://localhost:8056/v1/store/generate", postData)
+      .then((res) => console.log("POST SUCCESS"));
+
+    console.log(postData);
+  };
+
   const sampleCustomerData = [
     "Name",
     "Phone",
@@ -29,14 +56,21 @@ const PartnerPortal = () => {
     "Age",
   ];
 
-  let finalMapping = {
-    Name: "",
-    Phone: "",
-    Address: "",
-    PAN: "",
-    Aadhar: "",
-    RegNumber: "",
-    Age: "",
+  // let finalMapping = {
+  //   Name: "",
+  //   Phone: "",
+  //   Address: "",
+  //   PAN: "",
+  //   Aadhar: "",
+  //   RegNumber: "",
+  //   Age: "",
+  // };
+
+  let policyDetails = {
+    policyName: policyName,
+    policyDescription: policyDescription,
+    partnerDiscount: partnerDiscount,
+    partnerPremium: partnerPremium,
   };
 
   const extractKeys = (jsonObject) => {
@@ -54,7 +88,6 @@ const PartnerPortal = () => {
   useEffect(() => {
     setLocalMapping(localStorage.getItem("mapping"));
     extractKeys(JSON.parse(localStorage.getItem("mapping")));
-    renderUIBasedOnJsonFile();
   }, []);
 
   const renderedKeys = new Array();
@@ -66,14 +99,6 @@ const PartnerPortal = () => {
   keyArray.forEach(function (element) {
     keyList.push({ label: element, value: element });
   });
-
-  const [vehiclePriceSample, setVehiclePriceSample] = useState("");
-  const [vehicleMakeSample, setVehicleMakeSample] = useState("");
-  const [vehicleModelSample, setVehicleModelSample] = useState("");
-  const [kmsDrivenSample, setKmsDrivenSample] = useState("");
-
-  const [regNumberSample, setRegNumberSample] = useState("");
-  const [regYearSample, setRegYearSample] = useState();
 
   const [randomInt, setRandomInt] = useState(8);
 
@@ -175,10 +200,10 @@ const PartnerPortal = () => {
                                     finalMapping[extractedFinalMappingKey]
                                   );
 
-                                  finalMapping = {
+                                  setFinalMapping({
                                     ...finalMapping,
                                     [extractedFinalMappingKey]: e.target.value,
-                                  };
+                                  });
                                 } else {
                                   console.log("ERROR");
                                 }
@@ -204,6 +229,155 @@ const PartnerPortal = () => {
                 </Card>
               </Col>
             </Row>
+            {/* <Row className="mt-4">
+              <Col>
+                <Accordion>
+                  <Accordion.Item eventKey="0">
+                    <Accordion.Header>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <b>Motor Insurance Details</b>
+                      </div>
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      <Card className="text-start">
+                        <Card.Header>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <b>Sample data</b>
+                            <Button
+                              variant="success"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                generateRandomMotorDetails();
+                              }}
+                            >
+                              Click Here
+                            </Button>
+                          </div>
+                        </Card.Header>
+                        <ListGroup variant="flush">
+                          <ListGroup.Item
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <span> Vehicle Make</span>
+                            <span>{vehicleMakeSample}</span>
+                          </ListGroup.Item>
+                          <ListGroup.Item
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <span> Vehicle Model</span>
+                            <span>{vehicleModelSample}</span>
+                          </ListGroup.Item>
+                          <ListGroup.Item
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <span>Kilometers Driven</span>
+                            <span>{kmsDrivenSample}</span>
+                          </ListGroup.Item>
+                          <ListGroup.Item
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <span>Ex-Showroom Price</span>
+                            <span>{vehiclePriceSample}</span>
+                          </ListGroup.Item>
+                          <ListGroup.Item
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <span>Registration Number</span>
+                            <span className="text-uppercase">
+                              {regNumberSample}
+                            </span>
+                          </ListGroup.Item>
+                          <ListGroup.Item
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <span>Registration Year</span>
+                            <span>{regYearSample}</span>
+                          </ListGroup.Item>
+                        </ListGroup>
+                      </Card>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
+              </Col>
+            </Row> */}
+            <Row className="mt-4">
+              <Col>
+                <Card className="text-start">
+                  <Card.Header>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <b>Policy Issuance Details</b>
+                    </div>
+                  </Card.Header>
+                  <ListGroup variant="flush">
+                    <ListGroup.Item
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <span> Partner Discount</span>
+                      <span>
+                        <input
+                          type="number"
+                          onChange={(e) => {
+                            setPartnerDiscount(e.target.value);
+                          }}
+                        />
+                      </span>
+                    </ListGroup.Item>
+                    <ListGroup.Item
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <span> Partner Premium</span>
+                      <span>
+                        <input
+                          onChange={(e) => {
+                            setPartnerPremium(e.target.value);
+                          }}
+                          type="number"
+                        />
+                      </span>
+                    </ListGroup.Item>
+                  </ListGroup>
+                </Card>
+              </Col>
+            </Row>
           </Col>
 
           <Col>
@@ -224,7 +398,7 @@ const PartnerPortal = () => {
                 </InputGroup>
               </Row>
               <Row xs={1} sm={1} md={2}>
-                <Col>
+                {/* <Col>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Template Name</Form.Label>
                     <Form.Control
@@ -232,12 +406,15 @@ const PartnerPortal = () => {
                       placeholder="Enter template Name"
                     />
                   </Form.Group>
-                </Col>
+                </Col> */}
                 <Col>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Policy Name</Form.Label>
                     <Form.Control
                       type="email"
+                      onChange={(e) => {
+                        setPolicyName(e.target.value);
+                      }}
                       placeholder="Enter policy name"
                     />
                   </Form.Group>
@@ -247,11 +424,14 @@ const PartnerPortal = () => {
                     <Form.Label>Policy Template Description</Form.Label>
                     <Form.Control
                       type="text"
+                      onChange={(e) => {
+                        setPolicyDescription(e.target.value);
+                      }}
                       placeholder="Template description"
                     />
                   </Form.Group>
                 </Col>
-                <Col>
+                {/* <Col>
                   <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Invite Template Collaborator</Form.Label>
                     <Form.Control
@@ -259,11 +439,24 @@ const PartnerPortal = () => {
                       placeholder="Template Collaborator"
                     />
                   </Form.Group>
-                </Col>
+                </Col> */}
               </Row>
 
-              <Row xs={1} sm={1} md={2}>
-                <Col>Template Preview</Col>
+              <Row xs={1} sm={1} md={1}>
+                {/* <Col>
+                  <Form.Group
+                    className="mb-3"
+                    controlId="exampleForm.ControlTextarea1"
+                  >
+                    <Form.Label>Template Preview</Form.Label>
+                    <Form.Control
+                      value={JSON.stringify(finalMapping)}
+                      as="textarea"
+                      rows={5}
+                      cols={10}
+                    />
+                  </Form.Group>
+                </Col> */}
               </Row>
 
               <div
@@ -295,6 +488,7 @@ const PartnerPortal = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       console.log(finalMapping);
+                      console.log(policyDetails);
                     }}
                   >
                     Test Mapping
@@ -308,6 +502,7 @@ const PartnerPortal = () => {
                     className="px-3"
                     onClick={(e) => {
                       e.preventDefault();
+                      postPolicyData();
                     }}
                   >
                     Save Mapping
