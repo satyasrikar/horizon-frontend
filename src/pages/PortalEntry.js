@@ -21,6 +21,7 @@ const PortalEntry = () => {
       localStorage.setItem("mapping", e.target.result);
     };
   };
+
   return (
     <Container>
       <Row>
