@@ -49,7 +49,7 @@ const PartnerPortal = () => {
       ...policyDetails,
     };
     axios
-      .post("http://localhost:8080/v1/store/generate", postData)
+      .post("http://13.233.104.208:8080/v1/store/generate", postData)
       .then((res) => {
         console.log(`%cMAPPING RESPONSE`, "color: orange");
         console.log(res.data);
