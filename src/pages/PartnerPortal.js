@@ -34,16 +34,28 @@ const PartnerPortal = () => {
     Age: "",
   });
 
+  const mockMapping = (postData) => {
+    axios
+      .post("http://localhost:8080/v1/store/mapping", postData)
+      .then((res) => {
+        console.log(`%cMOCK SERVICE RESPONSE`, "color: orange");
+        console.log(res.data);
+      });
+  };
+
   const postPolicyData = () => {
     const postData = {
       ...finalMapping,
       ...policyDetails,
     };
     axios
-      .post("http://localhost:8056/v1/store/generate", postData)
-      .then((res) => console.log("POST SUCCESS"));
+      .post("http://localhost:8080/v1/store/generate", postData)
+      .then((res) => {
+        console.log(`%cMAPPING RESPONSE`, "color: orange");
+        console.log(res.data);
+      });
 
-    console.log(postData);
+    mockMapping(postData);
   };
 
   const sampleCustomerData = [
@@ -55,16 +67,6 @@ const PartnerPortal = () => {
     "Reg Number",
     "Age",
   ];
-
-  // let finalMapping = {
-  //   Name: "",
-  //   Phone: "",
-  //   Address: "",
-  //   PAN: "",
-  //   Aadhar: "",
-  //   RegNumber: "",
-  //   Age: "",
-  // };
 
   let policyDetails = {
     policyName: policyName,
@@ -82,17 +84,17 @@ const PartnerPortal = () => {
       };
       renderedKeys.push(keyObject);
     });
+    // console.log(renderedKeys);
     setFinalKeys(renderedKeys);
   };
 
   useEffect(() => {
     setLocalMapping(localStorage.getItem("mapping"));
     extractKeys(JSON.parse(localStorage.getItem("mapping")));
+    renderUIBasedOnJsonFile();
   }, []);
 
   const renderedKeys = new Array();
-
-  const [localKey, setLocalKey] = useState();
 
   var keyArray = renderedKeys;
   var keyList = [];
@@ -110,10 +112,11 @@ const PartnerPortal = () => {
   };
 
   const renderUIBasedOnJsonFile = () => {
+    // console.log(finalKeys);
     let matchedSampleCustomerData;
     let matchedKeys = new Array();
     if (finalKeys === undefined) {
-      console.log("Loading final Keys");
+      // console.log("Loading final Keys");
     } else {
       finalKeys.forEach((element) => {
         matchedSampleCustomerData = sampleCustomerData.filter(
@@ -121,7 +124,7 @@ const PartnerPortal = () => {
         );
         {
           if (matchedSampleCustomerData[0] === undefined) {
-            console.log("DID NOT MATCH");
+            // console.log("DID NOT MATCH");
           } else {
             matchedKeys.push(matchedSampleCustomerData[0]);
           }
@@ -129,18 +132,10 @@ const PartnerPortal = () => {
       });
     }
     setMatchedData(matchedKeys);
-    console.log(matchedKeys);
   };
 
   return (
     <div>
-      <Button
-        onClick={() => {
-          renderUIBasedOnJsonFile();
-        }}
-      >
-        SHOW
-      </Button>
       <Container className="mt-4 mb-4">
         <Row
           style={{ border: "3px solid black", borderRadius: "20px" }}
@@ -171,22 +166,18 @@ const PartnerPortal = () => {
                               justifyContent: "space-between",
                             }}
                           >
-                            <Button
+                            {/* <Button
                               variant="secondary"
                               onClick={() => {
                                 console.log(mappingField);
                               }}
                             >
                               Log
-                            </Button>
+                            </Button> */}
                             <span>{mappingField}</span>
                             <Form.Select
                               onChange={(e) => {
                                 if (mappingField === e.target.value) {
-                                  console.log(
-                                    mappingField + "-" + e.target.value
-                                  );
-
                                   const finalMappingKeys =
                                     Object.keys(finalMapping);
 
@@ -194,11 +185,6 @@ const PartnerPortal = () => {
                                     finalMappingKeys.filter(
                                       (key) => key === mappingField
                                     );
-
-                                  console.log(extractedFinalMappingKey);
-                                  console.log(
-                                    finalMapping[extractedFinalMappingKey]
-                                  );
 
                                   setFinalMapping({
                                     ...finalMapping,
@@ -229,105 +215,7 @@ const PartnerPortal = () => {
                 </Card>
               </Col>
             </Row>
-            {/* <Row className="mt-4">
-              <Col>
-                <Accordion>
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <b>Motor Insurance Details</b>
-                      </div>
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      <Card className="text-start">
-                        <Card.Header>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                            }}
-                          >
-                            <b>Sample data</b>
-                            <Button
-                              variant="success"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                generateRandomMotorDetails();
-                              }}
-                            >
-                              Click Here
-                            </Button>
-                          </div>
-                        </Card.Header>
-                        <ListGroup variant="flush">
-                          <ListGroup.Item
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                            }}
-                          >
-                            <span> Vehicle Make</span>
-                            <span>{vehicleMakeSample}</span>
-                          </ListGroup.Item>
-                          <ListGroup.Item
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                            }}
-                          >
-                            <span> Vehicle Model</span>
-                            <span>{vehicleModelSample}</span>
-                          </ListGroup.Item>
-                          <ListGroup.Item
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                            }}
-                          >
-                            <span>Kilometers Driven</span>
-                            <span>{kmsDrivenSample}</span>
-                          </ListGroup.Item>
-                          <ListGroup.Item
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                            }}
-                          >
-                            <span>Ex-Showroom Price</span>
-                            <span>{vehiclePriceSample}</span>
-                          </ListGroup.Item>
-                          <ListGroup.Item
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                            }}
-                          >
-                            <span>Registration Number</span>
-                            <span className="text-uppercase">
-                              {regNumberSample}
-                            </span>
-                          </ListGroup.Item>
-                          <ListGroup.Item
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                            }}
-                          >
-                            <span>Registration Year</span>
-                            <span>{regYearSample}</span>
-                          </ListGroup.Item>
-                        </ListGroup>
-                      </Card>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
-              </Col>
-            </Row> */}
+
             <Row className="mt-4">
               <Col>
                 <Card className="text-start">
@@ -466,7 +354,7 @@ const PartnerPortal = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <div>
+                {/* <div>
                   <Button
                     variant="dark"
                     type="submit"
@@ -478,7 +366,7 @@ const PartnerPortal = () => {
                   >
                     Download Template
                   </Button>
-                </div>
+                </div> */}
                 <div>
                   <Button
                     variant="dark"

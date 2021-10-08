@@ -32,7 +32,7 @@ function App() {
           path="/partners/portal/2"
           component={PartnerPortal}
         ></Route>
-        <Route exact path="/partners/portal/1" component={PortalEntry}></Route>
+        <Route exact path="/partners/portal" component={PortalEntry}></Route>
       </Router>
     </div>
   );
