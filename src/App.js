@@ -11,6 +11,7 @@ import UserRegisterPage from "./pages/UserRegisterPage";
 import PartnerPortal from "./pages/PartnerPortal";
 import PartnerRegisterPage from "./pages/PartnerRegisterPage";
 import PortalEntry from "./pages/PortalEntry";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route exact path="/about" component={AboutUs}></Route>
         <Route exact path="/login" component={LoginPage}></Route>
         <Route exact path="/register" component={UserRegisterPage}></Route>
+        <Route exact path="/dashboard" component={Dashboard}></Route>
         <Route
           exact
           path="/partners/register"

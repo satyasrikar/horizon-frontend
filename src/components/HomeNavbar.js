@@ -20,7 +20,7 @@ const HomeNavbar = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <NavDropdown title="Insurance" id="collasible-nav-dropdown">
+            {/* <NavDropdown title="Insurance" id="collasible-nav-dropdown">
               <NavDropdown.Item>
                 <NavLink
                   className="navLinkMenu"
@@ -30,9 +30,9 @@ const HomeNavbar = () => {
                   Motor
                 </NavLink>
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Travel</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Health</NavDropdown.Item>
-            </NavDropdown>
+              <NavDropdown.Item>Travel</NavDropdown.Item>
+              <NavDropdown.Item>Health</NavDropdown.Item>
+            </NavDropdown> */}
           </Nav>
           <Nav>
             <Nav.Link>
@@ -44,13 +44,23 @@ const HomeNavbar = () => {
                 Partner Portal
               </NavLink>
             </Nav.Link>
-            <Nav.Link>
+            {/* <Nav.Link>
               <NavLink
                 className="navLink"
                 activeClassName="navLinkActive"
                 to="/about"
               >
                 About us
+              </NavLink>
+            </Nav.Link> */}
+
+            <Nav.Link>
+              <NavLink
+                className="navLink"
+                activeClassName="navLinkActive"
+                to="/dashboard"
+              >
+                Dashboard
               </NavLink>
             </Nav.Link>
             <Nav.Link>
