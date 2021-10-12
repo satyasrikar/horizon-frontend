@@ -1,8 +1,37 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Row, ProgressBar } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addUser } from "../redux/authSlice";
+import { useHistory } from "react-router";
 
 const LoginPage = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const loginHandler = (e) => {
+    e.preventDefault();
+    const loginUrl = "http://localhost:8045/api/auth/login";
+    const loginRequest = {
+      username: email,
+      password: password,
+    };
+
+    axios.post(loginUrl, loginRequest).then((res) => {
+      alert(res.data.token);
+
+      dispatch(
+        addUser({
+          username: res.data.username,
+          accessToken: res.data.token,
+        })
+      );
+
+      history.push("/dashboard");
+    });
+  };
   return (
     <div>
       <Container className="mt-4">
@@ -16,15 +45,20 @@ const LoginPage = () => {
             </Row>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </Form.Group>
             <div
               style={{
@@ -62,6 +96,7 @@ const LoginPage = () => {
                 type="submit"
                 // style={{ paddingInline: "1rem" }}
                 className="px-3"
+                onClick={loginHandler}
               >
                 <img
                   src="images/enter-invert.png"
