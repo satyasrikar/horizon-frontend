@@ -44,12 +44,24 @@ const Dashboard = () => {
       partnerName: "TATA Aig",
       partnerIRDA: "IRDA/MH/00432",
       insuranceOffered: ["motor", "travel", "health"],
+      partnerImgUrl:
+        "http://image3.mouthshut.com/images/imagesp/925030230s.png",
     },
     {
       partnerId: "HORZ3237",
       partnerName: "ICICI Lombard",
       partnerIRDA: "IRDA/WB/49711",
       insuranceOffered: ["motor", "life"],
+      partnerImgUrl:
+        "https://cdn.dnaindia.com/sites/default/files/styles/full/public/2017/09/27/612714-icici.jpg",
+    },
+    {
+      partnerId: "HORZ9687",
+      partnerName: "Reliance Life",
+      partnerIRDA: "IRDA/DL/11584",
+      insuranceOffered: ["life"],
+      partnerImgUrl:
+        "https://d1hl0z0ja1o93t.cloudfront.net/wp-content/uploads/2016/06/01181459/Reliance-Life-Logo.png",
     },
   ];
   return (
@@ -64,7 +76,15 @@ const Dashboard = () => {
             <Card.Header>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <h4>Horizon cPanel</h4>
-                <Button variant="dark">Refresh</Button>
+                <Button variant="dark">
+                  <img
+                    src="images/refresh.png"
+                    alt="refreshDashboard"
+                    style={{ width: "1.2rem" }}
+                  />
+                  &nbsp;
+                  <span>Refresh</span>
+                </Button>
               </div>
             </Card.Header>
             <Card.Body>
@@ -84,7 +104,10 @@ const Dashboard = () => {
                   </h6>
                 </Col>
                 <Col className="text-end">
-                  <Image src="https://picsum.photos/100" roundedCircle />
+                  <Image
+                    src="https://randomuser.me/api/portraits/men/22.jpg"
+                    roundedCircle
+                  />
                 </Col>
               </Row>
             </Card.Body>
@@ -97,8 +120,13 @@ const Dashboard = () => {
             className="mb-3"
           >
             <Tab eventKey="partners" title="Partners">
-              <h5>
-                <b>PARTNERS</b> registered with Horizon India
+              <h5 className="text-start">
+                <img
+                  src="images/insurance.png"
+                  alt=""
+                  style={{ width: "1.5rem" }}
+                />
+                &nbsp;|&nbsp;<b>PARTNERS</b> registered with Horizon India
               </h5>
               <Table striped bordered hover variant="light">
                 <thead>
@@ -114,7 +142,22 @@ const Dashboard = () => {
                     return (
                       <tr>
                         <td>{partner.partnerId}</td>
-                        <td>{partner.partnerName}</td>
+                        <td>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <img
+                              src={partner.partnerImgUrl}
+                              alt=""
+                              style={{ width: "3rem" }}
+                            />
+
+                            <span>{partner.partnerName}</span>
+                          </div>
+                        </td>
                         <td>{partner.partnerIRDA}</td>
                         <td>
                           {partner.insuranceOffered.map(
@@ -131,9 +174,9 @@ const Dashboard = () => {
             </Tab>
 
             <Tab eventKey="users" title="Users">
-              <h5>
-                {" "}
-                List of <b>USERS</b> in Horizon Database
+              <h5 className="text-start">
+                <img src="images/user.png" alt="" style={{ width: "1.5rem" }} />
+                &nbsp;|&nbsp;<b>USERS</b> registered with Horizon India
               </h5>
               <Table striped bordered hover variant="light">
                 <thead>
@@ -159,7 +202,14 @@ const Dashboard = () => {
               </Table>
             </Tab>
             <Tab eventKey="mappings" title="Mappings">
-              Mapping Requests
+              <h5 className="text-start">
+                <img
+                  src="images/mapping.png"
+                  alt=""
+                  style={{ width: "1.5rem" }}
+                />
+                &nbsp;|&nbsp;<b>Mappings</b> requests
+              </h5>
             </Tab>
           </Tabs>
         </Row>
