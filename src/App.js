@@ -12,6 +12,7 @@ import PartnerPortal from "./pages/PartnerPortal";
 import PartnerRegisterPage from "./pages/PartnerRegisterPage";
 import PortalEntry from "./pages/PortalEntry";
 import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -23,18 +24,25 @@ function App() {
         <Route exact path="/about" component={AboutUs}></Route>
         <Route exact path="/login" component={LoginPage}></Route>
         <Route exact path="/register" component={UserRegisterPage}></Route>
-        <Route exact path="/dashboard" component={Dashboard}></Route>
+
+        <ProtectedRoute exact path="/dashboard">
+          <Dashboard />
+        </ProtectedRoute>
         <Route
           exact
           path="/partners/register"
           component={PartnerRegisterPage}
         ></Route>
-        <Route
+        <ProtectedRoute
           exact
-          path="/partners/portal/2"
+          path="/portal/mapping"
           component={PartnerPortal}
-        ></Route>
-        <Route exact path="/partners/portal" component={PortalEntry}></Route>
+        ></ProtectedRoute>
+        <ProtectedRoute
+          exact
+          path="/portal/new"
+          component={PortalEntry}
+        ></ProtectedRoute>
       </Router>
     </div>
   );

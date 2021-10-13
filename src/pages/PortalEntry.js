@@ -14,6 +14,7 @@ import { addMapping } from "../redux/mappingSlice";
 const PortalEntry = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user);
+  const mapping = useSelector((state) => state.mapping);
   const [selectedFile, setSelectedFile] = useState();
   const [renderedFile, setRenderedFile] = useState({});
   const changeHandler = (e) => {
@@ -22,7 +23,6 @@ const PortalEntry = () => {
     fileReader.onload = (e) => {
       setRenderedFile(JSON.parse(e.target.result));
       setSelectedFile(e.target.result);
-      localStorage.setItem("mapping", e.target.result);
 
       dispatch(
         addMapping({
@@ -37,8 +37,9 @@ const PortalEntry = () => {
     <Container>
       <Row>
         <Col>
-          <InputGroup className="mb-3">
-            <input type="file" name="file" onChange={changeHandler} />
+          <input type="file" name="file" onChange={changeHandler} />
+
+          {/* <InputGroup className="mb-3">
             <FormControl
               placeholder="Paste JSON Test Contract or upload WSDL"
               aria-label="TestDataInput"
@@ -48,13 +49,17 @@ const PortalEntry = () => {
             <Button variant="outline-secondary" id="button-addon2">
               Upload
             </Button>
-          </InputGroup>
+          </InputGroup> */}
         </Col>
       </Row>
       <Row>
-        <Link to="/partners/portal/2">
-          <Button>Next</Button>
-        </Link>
+        {mapping.mappingContent ? (
+          <Link to="/portal/mapping">
+            <Button>Next</Button>
+          </Link>
+        ) : (
+          ""
+        )}
       </Row>
     </Container>
   );

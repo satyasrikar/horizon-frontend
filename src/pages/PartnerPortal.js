@@ -12,12 +12,14 @@ import {
   FormControl,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const PartnerPortal = () => {
   const [localMapping, setLocalMapping] = useState();
   const [policyName, setPolicyName] = useState();
+  const [partnerName, setPartnerName] = useState();
   const [policyDescription, setPolicyDescription] = useState();
   const [finalKeys, setFinalKeys] = useState();
   const [renderedFile, setRenderedFile] = useState();
@@ -34,6 +36,11 @@ const PartnerPortal = () => {
     Age: "",
   });
 
+  const mapping = useSelector((state) => state.mapping);
+  const currentUser = useSelector((state) => state.user);
+
+  const history = useHistory();
+
   const mockMapping = (postData) => {
     axios
       .post("http://localhost:8080/v1/store/mapping", postData)
@@ -49,13 +56,16 @@ const PartnerPortal = () => {
       ...policyDetails,
     };
     axios
-      .post("http://localhost:8080/v1/store/generate", postData)
+      .post(
+        "http://localhost:8080/v1/store/generate?partnerName=" + partnerName,
+        postData
+      )
       .then((res) => {
         console.log(`%cMAPPING RESPONSE`, "color: orange");
         console.log(res.data);
       });
 
-    mockMapping(postData);
+    // mockMapping(postData);
   };
 
   const sampleCustomerData = [
@@ -89,8 +99,8 @@ const PartnerPortal = () => {
   };
 
   useEffect(() => {
-    setLocalMapping(localStorage.getItem("mapping"));
-    extractKeys(JSON.parse(localStorage.getItem("mapping")));
+    setLocalMapping(mapping.mappingContent);
+    extractKeys(JSON.parse(mapping.mappingContent));
     renderUIBasedOnJsonFile();
   }, []);
 
@@ -277,29 +287,23 @@ const PartnerPortal = () => {
                 </h6>
               </Row>
               <Row>
-                <InputGroup className="mb-3">
-                  <FormControl
-                    placeholder="Paste JSON Test Contract or upload WSDL"
-                    aria-label="TestDataInput"
-                    aria-describedby="basic-addon2"
+                <Form.Group className="mb-3">
+                  <Form.Label>Partner Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    onChange={(e) => {
+                      setPartnerName(e.target.value);
+                    }}
+                    placeholder="Enter Partner name"
                   />
-                </InputGroup>
+                </Form.Group>
               </Row>
               <Row xs={1} sm={1} md={2}>
-                {/* <Col>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Template Name</Form.Label>
-                    <Form.Control
-                      type="email"
-                      placeholder="Enter template Name"
-                    />
-                  </Form.Group>
-                </Col> */}
                 <Col>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-3">
                     <Form.Label>Policy Name</Form.Label>
                     <Form.Control
-                      type="email"
+                      type="text"
                       onChange={(e) => {
                         setPolicyName(e.target.value);
                       }}
@@ -308,8 +312,8 @@ const PartnerPortal = () => {
                   </Form.Group>
                 </Col>
                 <Col>
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Policy Template Description</Form.Label>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Template Description</Form.Label>
                     <Form.Control
                       type="text"
                       onChange={(e) => {
@@ -319,33 +323,9 @@ const PartnerPortal = () => {
                     />
                   </Form.Group>
                 </Col>
-                {/* <Col>
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Invite Template Collaborator</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Template Collaborator"
-                    />
-                  </Form.Group>
-                </Col> */}
               </Row>
 
-              <Row xs={1} sm={1} md={1}>
-                {/* <Col>
-                  <Form.Group
-                    className="mb-3"
-                    controlId="exampleForm.ControlTextarea1"
-                  >
-                    <Form.Label>Template Preview</Form.Label>
-                    <Form.Control
-                      value={JSON.stringify(finalMapping)}
-                      as="textarea"
-                      rows={5}
-                      cols={10}
-                    />
-                  </Form.Group>
-                </Col> */}
-              </Row>
+              <Row xs={1} sm={1} md={1}></Row>
 
               <div
                 className="mt-5"
@@ -354,19 +334,6 @@ const PartnerPortal = () => {
                   justifyContent: "space-between",
                 }}
               >
-                {/* <div>
-                  <Button
-                    variant="dark"
-                    type="submit"
-                    // style={{ paddingInline: "1rem" }}
-                    className="px-3"
-                    onClick={(e) => {
-                      e.preventDefault();
-                    }}
-                  >
-                    Download Template
-                  </Button>
-                </div> */}
                 <div>
                   <Button
                     variant="dark"

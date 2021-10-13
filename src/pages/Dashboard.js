@@ -10,8 +10,10 @@ import {
   Container,
   Table,
 } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
+  const currentUser = useSelector((state) => state.user);
   const mockUserData = [
     {
       userId: "USER4453",
@@ -80,10 +82,10 @@ const Dashboard = () => {
                   <img
                     src="images/refresh.png"
                     alt="refreshDashboard"
-                    style={{ width: "1.2rem" }}
+                    style={{ width: "1rem" }}
                   />
                   &nbsp;
-                  <span>Refresh</span>
+                  <span>Sync</span>
                 </Button>
               </div>
             </Card.Header>
@@ -94,7 +96,7 @@ const Dashboard = () => {
                 }}
               >
                 <Col className="text-start">
-                  <h5>John Doe</h5>
+                  <h5>{currentUser.name ? currentUser.name : "John Doe"}</h5>
                   <h6>
                     <b>Horizon System Admin</b>
                   </h6>
@@ -140,7 +142,7 @@ const Dashboard = () => {
                 <tbody>
                   {mockPartnerData.map((partner, idx) => {
                     return (
-                      <tr>
+                      <tr key={idx}>
                         <td>{partner.partnerId}</td>
                         <td>
                           <div

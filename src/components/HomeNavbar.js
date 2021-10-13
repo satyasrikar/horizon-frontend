@@ -1,8 +1,13 @@
 import React from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
+import { logout } from "../redux/authSlice";
 
 const HomeNavbar = () => {
+  const currentUser = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
@@ -19,68 +24,51 @@ const HomeNavbar = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            {/* <NavDropdown title="Insurance" id="collasible-nav-dropdown">
-              <NavDropdown.Item>
-                <NavLink
-                  className="navLinkMenu"
-                  activeClassName="navLinkActiveMenu"
-                  to="/"
-                >
-                  Motor
-                </NavLink>
-              </NavDropdown.Item>
-              <NavDropdown.Item>Travel</NavDropdown.Item>
-              <NavDropdown.Item>Health</NavDropdown.Item>
-            </NavDropdown> */}
-          </Nav>
+          <Nav className="me-auto"></Nav>
           <Nav>
             <Nav.Link>
               <NavLink
                 className="navLink"
                 activeClassName="navLinkActive"
-                to="/partners/portal"
+                to="/portal/new"
               >
                 Partner Portal
               </NavLink>
             </Nav.Link>
-            {/* <Nav.Link>
-              <NavLink
-                className="navLink"
-                activeClassName="navLinkActive"
-                to="/about"
-              >
-                About us
-              </NavLink>
-            </Nav.Link> */}
 
-            <Nav.Link>
-              <NavLink
-                className="navLink"
-                activeClassName="navLinkActive"
-                to="/dashboard"
-              >
-                Dashboard
-              </NavLink>
-            </Nav.Link>
-            <Nav.Link>
-              <NavLink
-                className="navLink"
-                activeClassName="navLinkActive"
-                to="/register"
-              >
-                Register
-              </NavLink>
-            </Nav.Link>
-            <Nav.Link>
-              <NavLink
-                className="navLink"
-                activeClassName="navLinkActive"
-                to="/login"
-              >
-                Login
-              </NavLink>
-            </Nav.Link>
+            {currentUser.accessToken ? (
+              <>
+                <Nav.Link>
+                  <NavLink
+                    className="navLink"
+                    activeClassName="navLinkActive"
+                    to="/dashboard"
+                  >
+                    Dashboard
+                  </NavLink>
+                </Nav.Link>
+                <Nav.Link>
+                  <NavLink
+                    className="navLink"
+                    activeClassName="navLinkActive"
+                    to="/"
+                    onClick={() => dispatch(logout())}
+                  >
+                    Logout
+                  </NavLink>
+                </Nav.Link>
+              </>
+            ) : (
+              <Nav.Link>
+                <NavLink
+                  className="navLink"
+                  activeClassName="navLinkActive"
+                  to="/login"
+                >
+                  Login
+                </NavLink>
+              </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

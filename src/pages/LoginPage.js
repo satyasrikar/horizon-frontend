@@ -20,12 +20,11 @@ const LoginPage = () => {
     };
 
     axios.post(loginUrl, loginRequest).then((res) => {
-      alert(res.data.token);
-
       dispatch(
         addUser({
           username: res.data.username,
           accessToken: res.data.token,
+          name: res.data.name,
         })
       );
 

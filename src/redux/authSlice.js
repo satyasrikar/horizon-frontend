@@ -9,6 +9,7 @@ const authSlice = createSlice({
       loggedIn: false,
       accessToken: "",
       authority: "",
+      name: "",
     },
   ],
 
@@ -20,6 +21,7 @@ const authSlice = createSlice({
         loggedIn: false,
         accessToken: "",
         authority: "user",
+        name: "",
       };
       return newClientUser;
     },
@@ -30,6 +32,7 @@ const authSlice = createSlice({
         loggedIn: true,
         accessToken: action.payload.accessToken,
         authority: action.payload.authority,
+        name: action.payload.name,
       };
       return newUser;
     },
@@ -40,6 +43,7 @@ const authSlice = createSlice({
         loggedIn: false,
         accessToken: "",
         authority: "",
+        name: "",
       };
       return newUser;
     },
