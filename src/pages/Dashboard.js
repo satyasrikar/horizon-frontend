@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Tabs,
@@ -14,6 +15,8 @@ import { useSelector } from "react-redux";
 
 const Dashboard = () => {
   const currentUser = useSelector((state) => state.user);
+
+  const [mappingList, setMappingList] = useState([]);
   const mockUserData = [
     {
       userId: "USER4453",
@@ -66,6 +69,13 @@ const Dashboard = () => {
         "https://d1hl0z0ja1o93t.cloudfront.net/wp-content/uploads/2016/06/01181459/Reliance-Life-Logo.png",
     },
   ];
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/v1/store/mapping/all").then((res) => {
+      console.log(res.data);
+      setMappingList(res.data);
+    });
+  }, []);
   return (
     <>
       {/* <Button variant="primary" onClick={handleShow}>
@@ -203,15 +213,49 @@ const Dashboard = () => {
                 </tbody>
               </Table>
             </Tab>
-            <Tab eventKey="mappings" title="Mappings">
+            <Tab eventKey="mappings" title="Mapping Requests">
               <h5 className="text-start">
                 <img
                   src="images/mapping.png"
                   alt=""
                   style={{ width: "1.5rem" }}
                 />
-                &nbsp;|&nbsp;<b>Mappings</b> requests
+                &nbsp;|&nbsp;<b>Mapping</b> requests
               </h5>
+
+              <Table striped bordered hover variant="light">
+                <thead>
+                  <tr>
+                    <th>Serial No.</th>
+                    <th>Mapping ID</th>
+                    <th>Partner Name</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {mappingList === null
+                    ? "Loading"
+                    : mappingList.map((mapping, idx) => {
+                        return (
+                          <tr key={idx}>
+                            <td>{idx + 1}</td>
+                            <td>{mapping.mappingId}</td>
+                            <td>{mapping.partnerName}</td>
+                            <td>
+                              {mapping.isApproved ? "Approved" : "Pending"}
+                            </td>
+
+                            <td>
+                              <Button variant="success">Approve</Button>
+                              &nbsp;
+                              <Button variant="secondary">View Mapping</Button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                </tbody>
+              </Table>
             </Tab>
           </Tabs>
         </Row>
