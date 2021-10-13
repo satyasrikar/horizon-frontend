@@ -10,6 +10,7 @@ import {
   Accordion,
   InputGroup,
   FormControl,
+  Alert,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, useHistory } from "react-router-dom";
@@ -35,6 +36,7 @@ const PartnerPortal = () => {
     RegNumber: "",
     Age: "",
   });
+  const [show, setShow] = useState(false);
 
   const mapping = useSelector((state) => state.mapping);
   const currentUser = useSelector((state) => state.user);
@@ -43,10 +45,21 @@ const PartnerPortal = () => {
 
   const mockMapping = (postData) => {
     axios
-      .post("http://localhost:8080/v1/store/mapping", postData)
+      .post("http://13.235.113.50:8080/v1/store/mapping", postData)
       .then((res) => {
         console.log(`%cMOCK SERVICE RESPONSE`, "color: orange");
         console.log(res.data);
+      });
+  };
+
+  const fetchMockMapping = (postData) => {
+    axios
+      .post(
+        "http://ec2-52-14-19-126.us-east-2.compute.amazonaws.com:5555/mapping/mock"
+      )
+      .then((res) => {
+        console.log(`%cMOCK SERVICE RESPONSE`, "color: orange");
+        alert(res.data);
       });
   };
 
@@ -57,12 +70,14 @@ const PartnerPortal = () => {
     };
     axios
       .post(
-        "http://localhost:8080/v1/store/generate?partnerName=" + partnerName,
+        "http://13.235.113.50:8080/v1/store/generate?partnerName=" +
+          partnerName,
         postData
       )
       .then((res) => {
         console.log(`%cMAPPING RESPONSE`, "color: orange");
         console.log(res.data);
+        setShow(true);
       });
 
     // mockMapping(postData);
@@ -159,6 +174,7 @@ const PartnerPortal = () => {
                 <h5>Test Dataset</h5>
               </div>
             </Row>
+
             <Row>
               <Col>
                 <Card className="text-start">
@@ -201,7 +217,7 @@ const PartnerPortal = () => {
                                     [extractedFinalMappingKey]: e.target.value,
                                   });
                                 } else {
-                                  console.log("ERROR");
+                                  console.log(" ");
                                 }
                               }}
                               style={{ width: "50%" }}
@@ -287,6 +303,24 @@ const PartnerPortal = () => {
                 </h6>
               </Row>
               <Row>
+                <Alert show={show} variant="success">
+                  <Alert.Heading>Mapping Successful</Alert.Heading>
+                  <p>
+                    Your request for mapping has been forwarded to our business
+                    team for approval. It shall be processed within 24-48 Hours.
+                  </p>
+
+                  <div className="d-flex justify-content-end">
+                    <Button
+                      onClick={() => setShow(false)}
+                      variant="outline-success"
+                    >
+                      Close
+                    </Button>
+                  </div>
+                </Alert>
+              </Row>
+              <Row>
                 <Form.Group className="mb-3">
                   <Form.Label>Partner Name</Form.Label>
                   <Form.Control
@@ -338,12 +372,13 @@ const PartnerPortal = () => {
                   <Button
                     variant="dark"
                     type="submit"
-                    // style={{ paddingInline: "1rem" }}
                     className="px-3"
                     onClick={(e) => {
                       e.preventDefault();
                       console.log(finalMapping);
                       console.log(policyDetails);
+                      alert("Mapping Successful");
+                      fetchMockMapping();
                     }}
                   >
                     Test Mapping

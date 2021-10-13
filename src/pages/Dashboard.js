@@ -10,13 +10,65 @@ import {
   Card,
   Container,
   Table,
+  Modal,
+  Alert,
+  FloatingLabel,
+  Form,
 } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setMappingView } from "../redux/mappingRequestSlice";
 
 const Dashboard = () => {
+  const mappingRequest = useSelector((state) => state.mappingRequest);
+  const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user);
+  const [lgShow, setLgShow] = useState(false);
+  const [show, setShow] = useState(false);
+  const [mappingResponse, setMappingResponse] = useState();
+  const [partnerData, setPartnerData] = useState([]);
 
+  const fetchMappingTemplate = () => {
+    axios
+      .get("http://13.235.113.50:8080/v1/store/mapping/" + mappingRequest.id)
+      .then((res) => {
+        console.log(res.data);
+        setMappingResponse(res.data);
+      });
+  };
+
+  const approveMapping = () => {
+    console.log(mappingRequest.mappingId);
+    axios
+      .put("http://13.235.113.50:8080/v1/store/mapping/" + mappingRequest.id)
+      .then((res) => {
+        setTimeout(() => {
+          setShow(true);
+        }, 2500);
+      });
+  };
+  const deleteMapping = () => {
+    axios
+      .delete(
+        "http://horizonresource-env.eba-w6wp4gx8.us-east-2.elasticbeanstalk.com/v1/store/mapping/" +
+          mappingRequest.id
+      )
+      .then((res) => {
+        setTimeout(() => {
+          alert("Mapping Deleted");
+        }, 2500);
+      });
+  };
   const [mappingList, setMappingList] = useState([]);
+
+  const fetchPartnerData = () => {
+    axios
+      .get(
+        "http://horizonresource-env.eba-w6wp4gx8.us-east-2.elasticbeanstalk.com/v1/store/partners"
+      )
+      .then((res) => {
+        setPartnerData(res.data);
+      });
+  };
   const mockUserData = [
     {
       userId: "USER4453",
@@ -70,11 +122,16 @@ const Dashboard = () => {
     },
   ];
 
-  useEffect(() => {
-    axios.get("http://localhost:8080/v1/store/mapping/all").then((res) => {
+  const fetchMappingList = () => {
+    axios.get("http://13.235.113.50:8080/v1/store/mapping/all").then((res) => {
       console.log(res.data);
       setMappingList(res.data);
     });
+  };
+
+  useEffect(() => {
+    fetchMappingList();
+    fetchPartnerData();
   }, []);
   return (
     <>
@@ -83,6 +140,78 @@ const Dashboard = () => {
       </Button> */}
 
       <Container>
+        <Modal
+          size="xl"
+          show={lgShow}
+          onHide={() => setLgShow(false)}
+          aria-labelledby="mappingTemplate"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="mappingTemplate">
+              {mappingRequest.partnerName}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Alert show={show} variant="success">
+              <Alert.Heading>Mapping Approved</Alert.Heading>
+              <p>
+                You shall be eligible to offer Insurance services as a vendor at
+                Horizon India now. For any queries feel free to write to us at{" "}
+                <b>support@horizonIndia.com</b>
+              </p>
+
+              <div className="d-flex justify-content-end">
+                <Button
+                  onClick={() => setLgShow(false)}
+                  variant="outline-success"
+                >
+                  Close
+                </Button>
+              </div>
+            </Alert>
+            <p>
+              <b>Mapping ID:</b> {mappingRequest.id}
+            </p>
+            <p>
+              <b>Approval Status:</b>
+              {mappingRequest.isApproved ? "Approved" : "Pending"}
+            </p>
+            <p>
+              <b>Mapping Template:</b>{" "}
+              <Button size="sm" onClick={fetchMappingTemplate}>
+                Load
+              </Button>
+            </p>
+
+            {mappingResponse === undefined ? (
+              ""
+            ) : (
+              <FloatingLabel controlId="floatingTextarea" className="mb-3">
+                <Form.Control
+                  as="textarea"
+                  style={{ height: "3rem" }}
+                  placeholder="Leave a comment here"
+                  value={JSON.stringify(mappingResponse)}
+                />
+              </FloatingLabel>
+            )}
+            <hr />
+            <div className="text-end">
+              {/* <Button variant="danger" onClick={deleteMapping}>
+                <img
+                  src="images/trash-modified.png"
+                  alt="view"
+                  style={{ width: "1rem" }}
+                />
+                Delete
+              </Button> */}
+              &nbsp;
+              <Button onClick={approveMapping} variant="success">
+                Approve Mapping
+              </Button>
+            </div>
+          </Modal.Body>
+        </Modal>
         <Row>
           <Card>
             <Card.Header>
@@ -110,10 +239,10 @@ const Dashboard = () => {
                   <h6>
                     <b>Horizon System Admin</b>
                   </h6>
-                  <h6>
+                  {/* <h6>
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                     Explicabo magni possimus eveniet eum iure, reprehenderit.
-                  </h6>
+                  </h6> */}
                 </Col>
                 <Col className="text-end">
                   <Image
@@ -150,7 +279,7 @@ const Dashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {mockPartnerData.map((partner, idx) => {
+                  {partnerData.map((partner, idx) => {
                     return (
                       <tr key={idx}>
                         <td>{partner.partnerId}</td>
@@ -162,22 +291,16 @@ const Dashboard = () => {
                             }}
                           >
                             <img
-                              src={partner.partnerImgUrl}
+                              src={partner.imageUrl}
                               alt=""
                               style={{ width: "3rem" }}
                             />
 
-                            <span>{partner.partnerName}</span>
+                            <span>{partner.name}</span>
                           </div>
                         </td>
-                        <td>{partner.partnerIRDA}</td>
-                        <td>
-                          {partner.insuranceOffered.map(
-                            (insuranceType, insuranceIndex) => {
-                              return ` ${insuranceType}`;
-                            }
-                          )}
-                        </td>
+                        <td>{partner.irda}</td>
+                        <td>{partner.insuranceOffered}</td>
                       </tr>
                     );
                   })}
@@ -247,9 +370,28 @@ const Dashboard = () => {
                             </td>
 
                             <td>
-                              <Button variant="success">Approve</Button>
-                              &nbsp;
-                              <Button variant="secondary">View Mapping</Button>
+                              <Button
+                                key={idx}
+                                onClick={() => {
+                                  setLgShow(true);
+                                  dispatch(
+                                    setMappingView({
+                                      partnerName: mapping.partnerName,
+                                      id: mapping.mappingId,
+                                      mappingContent: "MAPPINGGG",
+                                      isApproved: mapping.isApproved,
+                                    })
+                                  );
+                                }}
+                                variant="dark"
+                              >
+                                <img
+                                  src="images/magnifying-glass-modified.png"
+                                  alt="view"
+                                  style={{ width: "1rem" }}
+                                />
+                                View
+                              </Button>
                             </td>
                           </tr>
                         );

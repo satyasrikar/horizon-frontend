@@ -13,7 +13,9 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const loginHandler = (e) => {
     e.preventDefault();
-    const loginUrl = "http://localhost:8045/api/auth/login";
+    const loginUrl =
+     
+      "http://horizoncore-env.eba-98r5w6ic.us-east-2.elasticbeanstalk.com/api/auth/login";
     const loginRequest = {
       username: email,
       password: password,
