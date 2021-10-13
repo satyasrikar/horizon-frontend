@@ -29,7 +29,7 @@ const Dashboard = () => {
 
   const fetchMappingTemplate = () => {
     axios
-      .get("http://13.235.113.50:8080/v1/store/mapping/" + mappingRequest.id)
+      .get("http://3.109.220.13:8080/v1/store/mapping/" + mappingRequest.id)
       .then((res) => {
         console.log(res.data);
         setMappingResponse(res.data);
@@ -39,7 +39,7 @@ const Dashboard = () => {
   const approveMapping = () => {
     console.log(mappingRequest.mappingId);
     axios
-      .put("http://13.235.113.50:8080/v1/store/mapping/" + mappingRequest.id)
+      .put("http://3.109.220.13:8080/v1/store/mapping/" + mappingRequest.id)
       .then((res) => {
         setTimeout(() => {
           setShow(true);
@@ -123,7 +123,7 @@ const Dashboard = () => {
   ];
 
   const fetchMappingList = () => {
-    axios.get("http://13.235.113.50:8080/v1/store/mapping/all").then((res) => {
+    axios.get("http://3.109.220.13:8080/v1/store/mapping/all").then((res) => {
       console.log(res.data);
       setMappingList(res.data);
     });

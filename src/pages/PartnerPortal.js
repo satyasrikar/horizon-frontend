@@ -45,7 +45,7 @@ const PartnerPortal = () => {
 
   const mockMapping = (postData) => {
     axios
-      .post("http://13.235.113.50:8080/v1/store/mapping", postData)
+      .post("http://3.109.220.13:8080/v1/store/mapping", postData)
       .then((res) => {
         console.log(`%cMOCK SERVICE RESPONSE`, "color: orange");
         console.log(res.data);
@@ -70,8 +70,7 @@ const PartnerPortal = () => {
     };
     axios
       .post(
-        "http://13.235.113.50:8080/v1/store/generate?partnerName=" +
-          partnerName,
+        "http://3.109.220.13:8080/v1/store/generate?partnerName=" + partnerName,
         postData
       )
       .then((res) => {
